@@ -1,0 +1,33 @@
+
+fieldset{
+    background-color: teal;
+
+}
+ label{
+    font-size: 32px;
+    color: rgb(18 0 31 / 89%);
+    font-family:fantasy;
+    font-weight: bolder;
+}
+input{
+    margin:10px;
+}
+
+
+table,tr,th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+#parent{
+    margin-left:200px;
+    margin-bottom: 100px;
+}
+#parent ul li{
+    border: 1px solid black;
+    border-collapse: collapse;
+    width:25%;
+}
+#parent{
+    margin-left:200px;
+    margin-bottom: 100px;
+}
