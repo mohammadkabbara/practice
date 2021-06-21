@@ -80,6 +80,7 @@ function getRandomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+    
 
 function header() {
     let trEl = document.createElement('tr');
@@ -114,9 +115,12 @@ Student.prototype.render = function () {
     let td4El = document.createElement('td');
     let td5El = document.createElement('td');
     let td6El = document.createElement('td');
-    tr2El.appendChild(td1El); tr2El.appendChild(td2El);
-    tr2El.appendChild(td3El); tr2El.appendChild(td4El);
-    tr2El.appendChild(td5El); tr2El.appendChild(td6El);
+    tr2El.appendChild(td1El); 
+    tr2El.appendChild(td2El);
+    tr2El.appendChild(td3El);
+     tr2El.appendChild(td4El);
+    tr2El.appendChild(td5El);
+     tr2El.appendChild(td6El);
     td1El.textContent = counter;
     td2El.textContent = this.email.substring(0, this.email.lastIndexOf('@'));
     td3El.textContent = this.email;
@@ -137,7 +141,8 @@ function eventclilck(event) {
     let email = event.target.email.value;
     let mobile = event.target.R2.value;
     mobile = parseInt(mobile);
-    let tuition = event.target.R3.value; tuition = parseInt(tuition);
+    let tuition = event.target.R3.value;
+     tuition = parseInt(tuition);
     let newStudent = new Student(email, mobile, tuition);
     newStudent.render();
     newStudent.total();

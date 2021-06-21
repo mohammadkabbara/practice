@@ -3,14 +3,22 @@
 
 Personal.allPersonal=[];
 
-let headerArray = ['name' , 'email' , 'password','price'];
+let headerArray = ['ID','name' , 'email' , 'password','price','age'];
 
 let parent  =document.getElementById('parent');
 let table =document.createElement('table');
 
+let P = document.createElement('P');
+   parent.appendChild(P);
 
 parent.appendChild(table);
 let total =0
+function getRandomNum(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 
 function header(){
     let trHeader =document.createElement('tr');
@@ -26,14 +34,19 @@ function header(){
 header();
 
 
-function Personal(name,email,password,price) {
+function Personal(name,email,password,tuition) {
     this.name=name;
     this.email=email;
     this.password=password;
-    this.price=price
+    this.tuition = tuition;
+    this.age = this.update();
     Personal.allPersonal.push(this)
     
 }
+Personal.prototype.update = function () {
+    return this.age = getRandomNum(18, 24);
+   
+};
 
 let form =document.getElementById('form');
 form.addEventListener('submit',onClick);
@@ -42,40 +55,53 @@ function onClick(event) {
     let name =event.target.name.value;
     let email=event.target.email.value;
     let password=event.target.password.value;
-    let price=event.target.price.value;
-    new Personal(name,email,password,price);
-    setItem();
+    let tuition = event.target.R3.value;
+    new Personal(name,email,password,tuition);
+
     
     render();
     renderLi();
+   allTotal();
+    setItem();
     
     
-    form.removeEventListener('submit', onClick);
+    // form.removeEventListener('submit', onClick);
     
 }
 
 
+let counter = 0
+
 function render() {
+    counter++
+    console.log(counter);
 
     for (let i= 0; i < Personal.allPersonal.length; i++) {
+        
         let trRow=document.createElement('tr')
         table.appendChild(trRow);
+        let tdc=document.createElement('td');
         let tdName=document.createElement('td');
         let tdEmail=document.createElement('td');
         let tdPassword=document.createElement('td');
-        let tdPrice=document.createElement('td')
+        let td6El =document.createElement('td')
+        let tdAge=document.createElement('td')
 
 
+        trRow.appendChild(tdc);
         trRow.appendChild(tdName);
         trRow.appendChild(tdEmail);
         trRow.appendChild(tdPassword);
-        trRow.appendChild(tdPrice);
+        trRow.appendChild(td6El);
+        trRow.appendChild(tdAge);
 
 
+        tdName.textContent=counter;
         tdName.textContent=Personal.allPersonal[i].name;
         tdEmail.textContent=Personal.allPersonal[i].email;
         tdPassword.textContent=Personal.allPersonal[i].password;
-        tdPrice.textContent=Personal.allPersonal[i].price;
+        td6El.textContent = Personal.allPersonal[i].tuition;
+        tdAge.textContent=Personal.allPersonal[i].age;
 
         
         
@@ -109,21 +135,10 @@ function renderLi() {
     }
     
 }
-// let p=document.createElement('p');
-//     parent.appendChild(p);
-//      function toto() {
-//         toto += this.price;
-//          p.textContent = `Total:${toto}JD`;
-//     };
-
-
-    
-//  function total() {
-
-//     total+=this.price;
-//     p.textContent=`this total is : ${total} JD`
-    
-// }
+function allTotal () {
+    total += this.tuition;
+     P.textContent = `Total:${total}JD`;
+};
 
 
 

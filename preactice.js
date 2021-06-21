@@ -1,128 +1,124 @@
-'use strict';
+Personal.allPersonal=[];
 
-Form.allForm=[];
-let headerArray=['name','email' ,'password'];
-let parent = document.getElementById('parent');
+let headerArray = ['ID','name' , 'phone' , 'tutition','age'];
+
+let parent  =document.getElementById('parent');
 let table =document.createElement('table');
+
+
+
 parent.appendChild(table);
-function header (){
-    let tr1 =document.createElement('tr')
-    table.appendChild(tr1);
-    for (let i = 0; i< headerArray.length; i++) {
-        let th1 =document.createElement('th');
-        tr1.appendChild(th1);
-        th1.textContent=headerArray[i]
+
+function getRandomNum(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+
+function header(){
+    let trHeader =document.createElement('tr');
+    table.appendChild(trHeader);
+    for (let i = 0; i < headerArray.length; i++) {
+        let thHeader=document.createElement('th');
+        trHeader.appendChild(thHeader);
+        thHeader.textContent=headerArray[i]
         
         
     }
 }
-header ();
-
-
-function Form(name,email,password){
+header();
+function Personal (name ,phone,tuition){
     this.name=name;
-    this.email=email;
-    this.password=password;
-    Form.allForm.push(this);
-
-}
-
-
-
-
+    this.phone=phone;
+    this.tuition=tuition;
+    this.age=this.update();
+    
+    Personal.allPersonal.push(this)
+};
 
 
 let form =document.getElementById('form');
-form.addEventListener('submit',handleSubmit);
-function handleSubmit(event){
+form.addEventListener('submit',onClick);
+function onClick(event){
     event.preventDefault();
-    let userName =event.target.name.value;
-   
-    let userpassword =event.target.password.value;
+    let name=event.target.name.value;
+    console.log(name);
+    let phone=event.target.phone.value;
+    console.log(phone);
+    let tuition=event.target.R3.value;
+    console.log(tuition);
+    new Personal(name,phone,tuition);
     
-    let useremail =event.target.email.value;
 
-    let newStudent= new Form (userName,userpassword,useremail);
-    
-   
-    updateStorage();
-    newStudent.render();
-    newStudent.renderLi();
-    form.removeEventListener('submit',handleSubmit);
-    
-    
+    render();
+    setItem();
 
 }
 
-Form.prototype.render=function(){
-    for (let i = 0; i <Form.allForm.length; i++) {
-      
-        
+
+Personal.prototype.update=function(){
+    return this.age=getRandomNum(18,25)
+
+
+}
+let counter=0
+
+let trRow=document.createElement('tr');
+table.appendChild(trRow);
+function render(){
  
-    let tr2 =document.createElement('tr')
-    table.appendChild(tr2);
-    let tdName=document.createElement('td');
-    let tdpassword=document.createElement('td');
-    let tdemail=document.createElement('td');
-    tr2.appendChild(tdName);
-    tr2.appendChild(tdpassword);
-    tr2.appendChild(tdemail);
-    tdName.textContent=Form.allForm[i].name;
-    tdpassword.textContent=Form.allForm[i].password;
-    tdemail.textContent=Form.allForm[i].email;
 
 
-}
-};
-Form.prototype.renderLi=function(){
-    let ul =document.createElement('ul');
-    parent.appendChild(ul);
-    for (let i = 0; i <Form.allForm.length; i++) {
+    for (let i = 0; i < Personal.allPersonal.length; i++) {
+        counter++
 
 
+        let trRow=document.createElement('tr');
+        table.appendChild(trRow);
 
+       
+
+        let tdCounter=document.createElement('td');
+        let tdName=document.createElement('td');
+        let tdPhone=document.createElement('td');
+        let tdTutision=document.createElement('td');
+        let tdAge=document.createElement('td');
+
+
+        trRow.appendChild(tdCounter);
+        trRow.appendChild(tdName);
+        trRow.appendChild(tdPhone);
+        trRow.appendChild(tdTutision);
+        trRow.appendChild(tdAge);
+
+
+        tdCounter.textContent=counter;
+        tdName.textContent=Personal.allPersonal[i].name;
+        tdPhone.textContent=Personal.allPersonal[i].phone;
+        tdTutision.textContent=Personal.allPersonal[i].tuition;
+        tdAge.textContent=Personal.allPersonal[i].age;
+
+
+       
         
-
-      
-        let li=document.createElement('li');
-        ul.appendChild(li)
-        li.textContent=Form.allForm[i].name;
-
-        
-        let li1=document.createElement('li');
-        ul.appendChild(li1)
-        li1.textContent=Form.allForm[i].password;
-
-
-
-        let li2=document.createElement('li');
-        ul.appendChild(li2)
-        li2.textContent=Form.allForm[i].email;
-     }
-};
-
-
-
-
-
-function updateStorage() {
-    let storageArr = JSON.stringify(Form.allForm);
-    localStorage.setItem('formss', storageArr);
-    
-  }
-  
-  function getUsersStories() {
-    let data = localStorage.getItem('formss');
-    let storiesData = JSON.parse(data);
-    if (storiesData !== null) {
-        Form.allForm = storiesData;
     }
-  }
-  getUsersStories();
+}
 
 
+function setItem(){
+    let setData=JSON.stringify(Personal.allPersonal);
+    localStorage.setItem('data' ,setData)
+}
 
-   
 
+function getItem(){
+    let data =localStorage.getItem('data');
+    let storageData=JSON.parse(data);
+    if(storageData!==null){
+        storageData=Personal.allPersonal
+    }
+}
+getItem();
 
 
